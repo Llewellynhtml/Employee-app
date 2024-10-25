@@ -1,33 +1,52 @@
-import React, { useState } from 'react';
-import Editemployee from './Editemployee'; 
+import React, { useState, useEffect } from 'react';
+import Editemployee from './Editemployee';
 
-function Displayemployee({ employees, removeEmployee, updateEmployee }) {
+function Displayemployee({ removeEmployee, updateEmployee }) {
+  const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchID, setSearchID] = useState('');
-  const [activeTab, setActiveTab] = useState('list'); 
+  const [activeTab, setActiveTab] = useState('list');
 
-  
+  useEffect(() => {
+    // Retrieve employees from local storage when the component mounts
+    const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
+    setEmployees(storedEmployees);
+  }, []);
+
   const filterEmployee = () => {
-    const selectedEmployee = employees.find(employee => employee.ID === searchID);
+    // Retrieve employees from local storage
+    const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
+    const selectedEmployee = storedEmployees.find(employee => employee.id === searchID);
+
     if (selectedEmployee) {
       setSelectedEmployee(selectedEmployee);
-      setActiveTab('edit'); 
+      setActiveTab('edit');
     } else {
       alert("Employee not found!");
     }
   };
 
-  
   const clearSelectedEmployee = () => {
     setSelectedEmployee(null);
     setSearchID('');
-    setActiveTab('list'); 
+    setActiveTab('list');
   };
 
-
   const handleUpdateEmployee = (updatedEmployee) => {
-    updateEmployee(updatedEmployee);
-    clearSelectedEmployee(); 
+    const updatedEmployees = employees.map(employee =>
+      employee.id === updatedEmployee.id ? updatedEmployee : employee
+    );
+    
+    setEmployees(updatedEmployees);
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees)); // Update local storage
+    clearSelectedEmployee();
+  };
+
+  const handleRemoveEmployee = (id) => {
+    const updatedEmployees = employees.filter(employee => employee.id !== id);
+    setEmployees(updatedEmployees);
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees)); // Update local storage
+    alert("Employee deleted successfully!"); // Feedback message
   };
 
   return (
@@ -68,21 +87,21 @@ function Displayemployee({ employees, removeEmployee, updateEmployee }) {
                 </thead>
                 <tbody>
                   {employees.map((employee) => (
-                    <tr key={employee.ID}>
-                      <td>{employee.Name}</td>
-                      <td>{employee.Email}</td>
-                      <td>{employee.Number}</td>
-                      <td><img src={employee.Image} alt="Employee" style={{ width: '50px', height: '50px' }} /></td>
-                      <td>{employee.Position}</td>
-                      <td>{employee.ID}</td>
-                      <td>{employee.Gender}</td>
-                      <td>{employee.City}</td>
-                      <td>{employee.Province}</td>
-                      <td>{employee.ZipCode}</td>
+                    <tr key={employee.id}>
+                      <td>{employee.name}</td>
+                      <td>{employee.email}</td>
+                      <td>{employee.number}</td>
+                      <td><img src={employee.image} alt="Employee" style={{ width: '50px', height: '50px' }} /></td>
+                      <td>{employee.position}</td>
+                      <td>{employee.id}</td>
+                      <td>{employee.gender}</td>
+                      <td>{employee.city}</td>
+                      <td>{employee.province}</td>
+                      <td>{employee.zipCode}</td>
                       <td>
                         <div>
                           <button onClick={() => { setSelectedEmployee(employee); setActiveTab('edit'); }}>Edit</button>
-                          <button onClick={() => removeEmployee(employee.ID)}>Delete</button>
+                          <button onClick={() => handleRemoveEmployee(employee.id)}>Delete</button>
                         </div>
                       </td>
                     </tr>

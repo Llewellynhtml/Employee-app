@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
-import './App.css';
-import AddEmployeeInformation from './Components/Add';
-import Displayemployee from './Components/Displayemployee';
-import Editemployee from './Components/Editemployee';
-import Tabs from './Components/Tabs';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Import necessary routing components
+import "./App.css";
+import AddEmployeeInformation from "./Components/Add";
+import Displayemployee from "./Components/Displayemployee";
+import Editemployee from "./Components/Editemployee";
+import Tabs from "./Components/Tabs";
+import Signin from "./Components/Signin"; // Import Signin component
+import Signup from "./Components/Signup"; // Import Signup component
 
 function App() {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  const addEmployee = (name, email, number, image, position, id, gender, city, province, zipCode) => {
+  const addEmployee = (
+    name,
+    email,
+    number,
+    image,
+    position,
+    id,
+    gender,
+    city,
+    province,
+    zipCode
+  ) => {
     const newEmployee = {
       Name: name,
       Email: email,
@@ -26,47 +40,62 @@ function App() {
   };
 
   const removeEmployee = (empID) => {
-    const updatedEmployees = employees.filter(emp => emp.ID !== empID);
+    const updatedEmployees = employees.filter((emp) => emp.ID !== empID);
     setEmployees(updatedEmployees);
   };
 
   const updateEmployee = (updatedEmployee) => {
-    const updatedEmployees = employees.map(emp => (emp.ID === updatedEmployee.ID ? updatedEmployee : emp));
+    const updatedEmployees = employees.map((emp) =>
+      emp.ID === updatedEmployee.ID ? updatedEmployee : emp
+    );
     setEmployees(updatedEmployees);
   };
 
   const selectEmployee = (empID) => {
-    const employee = employees.find(emp => emp.ID === empID);
+    const employee = employees.find((emp) => emp.ID === empID);
     setSelectedEmployee(employee);
   };
 
   const tabs = [
     {
-      label: 'Add Employee',
-      content: <AddEmployeeInformation add={addEmployee} />
+      label: "Add Employee",
+      content: <AddEmployeeInformation add={addEmployee} />,
     },
     {
-      label: 'Display Employees',
-      content: <Displayemployee employees={employees} removeEmployee={removeEmployee} updateEmployee={updateEmployee} />
+      label: "Display Employees",
+      content: (
+        <Displayemployee
+          employees={employees}
+          removeEmployee={removeEmployee}
+          updateEmployee={updateEmployee}
+        />
+      ),
     },
     {
-      label: 'Edit Employee',
-      content: <Editemployee 
-                  employees={employees} 
-                  selectedEmployee={selectedEmployee} 
-                  updateEmployee={updateEmployee} 
-                  selectEmployee={selectEmployee} 
-               />
-    }
+      label: "Edit Employee",
+      content: (
+        <Editemployee
+          employees={employees}
+          selectedEmployee={selectedEmployee}
+          updateEmployee={updateEmployee}
+          selectEmployee={selectEmployee}
+        />
+      ),
+    },
   ];
 
   return (
-    <div className="App">
-      <div>
+    <Router>
+      <div className="App">
         <h2>Employee App</h2>
-        <Tabs tabs={tabs} />
+        <Routes>
+          <Route path="/" element={<Signin />} />
+          <Route path="/home" element={<Tabs tabs={tabs} />} />
+
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 

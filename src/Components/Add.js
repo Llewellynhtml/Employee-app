@@ -4,7 +4,7 @@ function AddEmployeeInformation(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
-  const [image, setImage] = useState(""); 
+  const [image, setImage] = useState("");
   const [position, setPosition] = useState("");
   const [id, setId] = useState("");
   const [gender, setGender] = useState("");
@@ -17,9 +17,29 @@ function AddEmployeeInformation(props) {
       alert("Invalid ID. Please enter a valid ID.");
       return;
     }
-    props.add(name, email, number, image, position, id, gender, city, province, zipCode);
+
+    // Create an employee object
+    const employee = {
+      name,
+      email,
+      number,
+      image,
+      position,
+      id,
+      gender,
+      city,
+      province,
+      zipCode,
+    };
+
+    // Save the employee object to local storage
+    const employees = JSON.parse(localStorage.getItem("employees")) || [];
+    employees.push(employee);
+    localStorage.setItem("employees", JSON.stringify(employees));
+
     alert("Employee added successfully!");
-    
+
+    // Clear the input fields
     setName("");
     setEmail("");
     setNumber("");
@@ -37,9 +57,9 @@ function AddEmployeeInformation(props) {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result); 
+        setImage(reader.result);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
   };
 
