@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { Link, useNavigate } from 'react-router-dom';
 import './Signin.css';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const handleSignIn = (e) => {
     e.preventDefault();
     
-    // Simulated authentication logic (you can replace this with your own)
+    
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.email === email && password) { // Basic validation
+    if (user && user.email === email && password) { 
       alert('Login successful!');
-      navigate('/home'); // Navigate to home after successful login
+      navigate('/home'); 
     } else {
       alert('Invalid credentials! Please try again.');
     }

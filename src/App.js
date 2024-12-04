@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Import necessary routing components
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; 
 import "./App.css";
 import AddEmployeeInformation from "./Components/Add";
 import Displayemployee from "./Components/Displayemployee";
 import Editemployee from "./Components/Editemployee";
 import Tabs from "./Components/Tabs";
-import Signin from "./Components/Signin"; // Import Signin component
-import Signup from "./Components/Signup"; // Import Signup component
+import Signin from "./Components/Signin"; 
+import Signup from "./Components/Signup"; 
 
 function App() {
   const [employees, setEmployees] = useState([]);

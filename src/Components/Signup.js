@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate, Link } from 'react-router-dom'; 
 import './Signin.css';
 
 const Signup = () => {
@@ -8,7 +8,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -18,10 +18,10 @@ const Signup = () => {
       return;
     }
 
-    // Save user details to local storage
+    
     localStorage.setItem('user', JSON.stringify({ firstName, lastName, email, password }));
     alert('Registered successfully!');
-    navigate('/home'); // Navigate to home after successful signup
+    navigate('/home'); 
   };
 
   return (

@@ -18,7 +18,6 @@ function AddEmployeeInformation(props) {
       return;
     }
 
-    // Create an employee object
     const employee = {
       name,
       email,
@@ -32,14 +31,12 @@ function AddEmployeeInformation(props) {
       zipCode,
     };
 
-    // Save the employee object to local storage
     const employees = JSON.parse(localStorage.getItem("employees")) || [];
     employees.push(employee);
     localStorage.setItem("employees", JSON.stringify(employees));
 
     alert("Employee added successfully!");
 
-    // Clear the input fields
     setName("");
     setEmail("");
     setNumber("");
@@ -93,7 +90,9 @@ function AddEmployeeInformation(props) {
           accept="image/*"
           onChange={handleImageUpload}
         />
-        {image && <img src={image} alt="Uploaded Preview" className="image-preview" />}
+        {image && (
+          <img src={image} alt="Uploaded Preview" className="image-preview" />
+        )}
         <input
           className="input-position"
           type="text"
@@ -115,7 +114,9 @@ function AddEmployeeInformation(props) {
           value={gender}
           onChange={(event) => setGender(event.target.value)}
         >
-          <option value="" disabled>Select Gender</option>
+          <option value="" disabled>
+            Select Gender
+          </option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
@@ -131,7 +132,9 @@ function AddEmployeeInformation(props) {
           value={province}
           onChange={(event) => setProvince(event.target.value)}
         >
-          <option value="" disabled>Select Province</option>
+          <option value="" disabled>
+            Select Province
+          </option>
           <option value="Gauteng">Gauteng</option>
           <option value="KwaZulu-Natal">KwaZulu-Natal</option>
           <option value="Western Cape">Western Cape</option>
@@ -150,7 +153,9 @@ function AddEmployeeInformation(props) {
           onChange={(event) => setZipCode(event.target.value)}
         />
       </div>
-      <button onClick={add} className="Add-button">Add information</button>
+      <button onClick={add} className="Add-button">
+        Add information
+      </button>
     </div>
   );
 }

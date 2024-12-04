@@ -8,13 +8,13 @@ function Displayemployee({ removeEmployee, updateEmployee }) {
   const [activeTab, setActiveTab] = useState('list');
 
   useEffect(() => {
-    // Retrieve employees from local storage when the component mounts
+    
     const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
     setEmployees(storedEmployees);
   }, []);
 
   const filterEmployee = () => {
-    // Retrieve employees from local storage
+    
     const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
     const selectedEmployee = storedEmployees.find(employee => employee.id === searchID);
 
@@ -38,15 +38,15 @@ function Displayemployee({ removeEmployee, updateEmployee }) {
     );
     
     setEmployees(updatedEmployees);
-    localStorage.setItem('employees', JSON.stringify(updatedEmployees)); // Update local storage
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees)); 
     clearSelectedEmployee();
   };
 
   const handleRemoveEmployee = (id) => {
     const updatedEmployees = employees.filter(employee => employee.id !== id);
     setEmployees(updatedEmployees);
-    localStorage.setItem('employees', JSON.stringify(updatedEmployees)); // Update local storage
-    alert("Employee deleted successfully!"); // Feedback message
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees)); 
+    alert("Employee deleted successfully!"); 
   };
 
   return (
